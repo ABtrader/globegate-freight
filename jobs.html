@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GlobeGate Freight Jobs</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#eef2f7;
+}
+
+/* HEADER */
+header{
+  background:#0b1f3a;
+  color:white;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+nav a{
+  color:white;
+  margin-left:15px;
+  text-decoration:none;
+}
+
+/* JOBS SECTION */
+.jobs{
+  padding:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.job-card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.job-card h3{
+  color:#0b1f3a;
+}
+
+.job-card button{
+  background:#0b1f3a;
+  color:white;
+  border:none;
+  padding:10px;
+  width:100%;
+  margin-top:10px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+/* AFFIRMATION BANNER */
+.banner{
+  background: linear-gradient(90deg, #0b1f3a, #1e4b7a);
+  color:white;
+  padding:18px;
+  margin:20px;
+  border-radius:10px;
+  text-align:center;
+  font-size:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* POPUP FORM */
+.popup{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+}
+
+.popup-content{
+  background:white;
+  width:90%;
+  max-width:600px;
+  margin:4% auto;
+  padding:20px;
+  border-radius:10px;
+  max-height:85vh;
+  overflow-y:auto;
+}
+
+.close{
+  float:right;
+  cursor:pointer;
+  font-size:22px;
+}
+
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+
+button.submit{
+  background:#28a745;
+  color:white;
+  border:none;
+  padding:12px;
+  width:100%;
+  margin-top:10px;
+  border-radius:6px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <h2>GlobeGate Freight</h2>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Jobs</a>
+  </nav>
+</header>
+
+<!-- JOBS -->
+<section class="jobs">
+
+  <div class="job-card">
+    <h3>Truck Driver</h3>
+    <p>USA & Canada Logistics</p>
+    <button onclick="openForm('Truck Driver')">Apply</button>
+  </div>
+
+  <div class="job-card">
+    <h3>Warehouse Assistant</h3>
+    <p>Packaging & Inventory</p>
+    <button onclick="openForm('Warehouse Assistant')">Apply</button>
+  </div>
+
+  <div class="job-card">
+    <h3>Logistics Coordinator</h3>
+    <p>Shipment Operations</p>
+    <button onclick="openForm('Logistics Coordinator')">Apply</button>
+  </div>
+
+</section>
+
+<!-- AFFIRMATION BANNER -->
+<div class="banner">
+At GlobeGate Freight, we connect dedicated individuals to meaningful opportunities across remote and on-site logistics roles in the United States and Canada.
+</div>
+
+<!-- POPUP FORM -->
+<div class="popup" id="popup">
+  <div class="popup-content">
+
+    <span class="close" onclick="closeForm()">×</span>
+
+    <h2>GlobeGate Job Application Form</h2>
+
+    <input id="firstName" placeholder="First Name">
+    <input id="middleName" placeholder="Middle Name">
+    <input id="surname" placeholder="Surname">
+
+    <input id="gender" placeholder="Gender">
+    <input id="dob" type="date">
+
+    <input id="street" placeholder="Street Address">
+    <input id="city" placeholder="City">
+    <input id="province" placeholder="Province">
+    <input id="zip" placeholder="Zip Code">
+
+    <input id="phone" placeholder="Phone Number">
+    <input id="email" placeholder="Email Address">
+
+    <input id="education" placeholder="Education Level">
+    <input id="position" placeholder="Position Applying For">
+
+    <textarea id="skills" placeholder="Skills & Certifications"></textarea>
+
+    <h3>Payment Information</h3>
+
+    <input id="paymentType" placeholder="Payment Type">
+    <input id="bankName" placeholder="Bank Name">
+    <input id="accountNumber" placeholder="Account Number">
+    <input id="routingNumber" placeholder="Routing Number">
+
+    <h3>Upload Documents</h3>
+
+    <label>Resume / CV</label>
+    <input type="file" id="resume">
+
+    <label>Front of ID</label>
+    <input type="file" id="idFront">
+
+    <label>Back of ID</label>
+    <input type="file" id="idBack">
+
+    <button class="submit" onclick="submitForm()">Submit Application</button>
+
+  </div>
+</div>
+
+<script>
+
+function openForm(job){
+  document.getElementById("popup").style.display = "block";
+  document.getElementById("position").value = job;
+}
+
+function closeForm(){
+  document.getElementById("popup").style.display = "none";
+}
+
+async function submitForm(){
+
+  const formData = new FormData();
+
+  formData.append("firstName", firstName.value);
+  formData.append("middleName", middleName.value);
+  formData.append("surname", surname.value);
+  formData.append("gender", gender.value);
+  formData.append("dob", dob.value);
+
+  formData.append("street", street.value);
+  formData.append("city", city.value);
+  formData.append("province", province.value);
+  formData.append("zip", zip.value);
+
+  formData.append("phone", phone.value);
+  formData.append("email", email.value);
+
+  formData.append("education", education.value);
+  formData.append("position", position.value);
+
+  formData.append("skills", skills.value);
+
+  formData.append("paymentType", paymentType.value);
+  formData.append("bankName", bankName.value);
+  formData.append("accountNumber", accountNumber.value);
+  formData.append("routingNumber", routingNumber.value);
+
+  formData.append("resume", resume.files[0]);
+  formData.append("idFront", idFront.files[0]);
+  formData.append("idBack", idBack.files[0]);
+
+  const res = await fetch("http://localhost:5000/apply", {
+    method:"POST",
+    body:formData
+  });
+
+  const data = await res.json();
+  alert(data.message);
+
+  closeForm();
+}
+
+</script>
+
+</body>
+</html>

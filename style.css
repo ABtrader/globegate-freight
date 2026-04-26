@@ -1,0 +1,164 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0B1F3A;
+  color: white;
+  padding: 15px 30px;
+}
+
+.logo {
+  margin: 0;
+}
+
+nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* HERO SLIDER */
+.slider {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* BACKGROUND IMAGES */
+.slide:nth-child(1) {
+  background-image: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7');
+}
+
+.slide:nth-child(2) {
+  background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d');
+}
+
+.slide:nth-child(3) {
+  background-image: url('https://images.unsplash.com/photo-1603791440384-56cd371ee9a7');
+}
+
+/* HERO TEXT */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+}
+
+.hero-content h2 {
+  font-size: 36px;
+}
+
+.hero-content button {
+  padding: 12px 25px;
+  background: #FF7A00;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* CATEGORIES */
+.categories {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+/* JOB LISTINGS */
+.job-listings {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.job-card {
+  background: white;
+  margin: 20px auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.job-card button {
+  background: #FF7A00;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+/* POPUP FORM */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  width: 300px;
+  margin: 100px auto;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.popup-content input {
+  width: 90%;
+  padding: 8px;
+}
+
+.popup-content button {
+  background: #FF7A00;
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+}

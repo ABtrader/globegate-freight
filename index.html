@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GlobeGate Freight</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1 class="logo">GlobeGate Freight</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="#">Employers</a>
+  </nav>
+</header>
+
+<!-- HERO SLIDER -->
+<section class="hero slider">
+
+  <div class="slide active"></div>
+  <div class="slide"></div>
+  <div class="slide"></div>
+
+  <div class="hero-content">
+    <h2>Your Gateway to Logistics Careers in USA & Canada</h2>
+    <p>Find trucking, warehouse, and supply chain jobs across North America.</p>
+    <button onclick="window.location.href='jobs.html'">
+      Browse Jobs
+    </button>
+  </div>
+
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <h2>Explore Job Categories</h2>
+
+  <div class="cards">
+    <div class="card">
+      <h3>🚛 Drivers</h3>
+      <p>Truck driving jobs across USA & Canada</p>
+    </div>
+
+    <div class="card">
+      <h3>📦 Warehouse</h3>
+      <p>Warehouse and logistics roles in North America</p>
+    </div>
+
+    <div class="card">
+      <h3>📊 Supply Chain</h3>
+      <p>Dispatch and coordination opportunities</p>
+    </div>
+  </div>
+</section>
+
+<script>
+let slides = document.querySelectorAll(".slide");
+let current = 0;
+
+function showSlide() {
+  slides.forEach((slide, index) => {
+    slide.classList.remove("active");
+    if (index === current) {
+      slide.classList.add("active");
+    }
+  });
+
+  current = (current + 1) % slides.length;
+}
+
+setInterval(showSlide, 4000);
+</script>
+
+</body>
+</html>
