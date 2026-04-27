@@ -124,8 +124,8 @@ button.submit{
 <header>
   <h2>GlobeGate Freight</h2>
   <nav>
-    <a href="#">Home</a>
-    <a href="#">Jobs</a>
+    <a href="index.html">Home</a>
+    <a href="jobs.html">Jobs</a>
   </nav>
 </header>
 
@@ -157,6 +157,49 @@ button.submit{
 At GlobeGate Freight, we connect dedicated individuals to meaningful opportunities across remote and on-site logistics roles in the United States and Canada.
 </div>
 
+<section class="about-boxes">
+
+  <h2>About Us</h2>
+
+  <div class="about-grid">
+
+    <div class="about-card">
+      <p>We move goods across the USA and Canada efficiently.</p>
+    </div>
+
+    <div class="about-card">
+      <p>We handle air, sea, road, and rail logistics.</p>
+    </div>
+
+    <div class="about-card">
+      <p>We simplify complex shipping operations.</p>
+    </div>
+
+    <div class="about-card">
+      <p>We ensure fast delivery and smooth customs clearance.</p>
+    </div>
+
+    <div class="about-card">
+      <p>We provide real-time tracking for all shipments.</p>
+    </div>
+
+    <div class="about-card">
+      <p>We support businesses with reliable logistics solutions.</p>
+    </div>
+
+    <div class="about-card highlight">
+      <h3>24/7 Operations</h3>
+      <p>We monitor shipments day and night.</p>
+    </div>
+
+    <div class="about-card highlight">
+      <h3>Always Available</h3>
+      <p>Our team is ready anytime for urgent needs.</p>
+    </div>
+
+  </div>
+
+</section>
 <!-- POPUP FORM -->
 <div class="popup" id="popup">
   <div class="popup-content">
@@ -221,43 +264,55 @@ function closeForm(){
 
 async function submitForm(){
 
+  alert("Submitting..."); // confirms button is working
+
   const formData = new FormData();
 
-  formData.append("firstName", firstName.value);
-  formData.append("middleName", middleName.value);
-  formData.append("surname", surname.value);
-  formData.append("gender", gender.value);
-  formData.append("dob", dob.value);
+  formData.append("firstName", document.getElementById("firstName").value);
+  formData.append("middleName", document.getElementById("middleName").value);
+  formData.append("surname", document.getElementById("surname").value);
+  formData.append("gender", document.getElementById("gender").value);
+  formData.append("dob", document.getElementById("dob").value);
 
-  formData.append("street", street.value);
-  formData.append("city", city.value);
-  formData.append("province", province.value);
-  formData.append("zip", zip.value);
+  formData.append("street", document.getElementById("street").value);
+  formData.append("city", document.getElementById("city").value);
+  formData.append("province", document.getElementById("province").value);
+  formData.append("zip", document.getElementById("zip").value);
 
-  formData.append("phone", phone.value);
-  formData.append("email", email.value);
+  formData.append("phone", document.getElementById("phone").value);
+  formData.append("email", document.getElementById("email").value);
 
-  formData.append("education", education.value);
-  formData.append("position", position.value);
+  formData.append("education", document.getElementById("education").value);
+  formData.append("position", document.getElementById("position").value);
 
-  formData.append("skills", skills.value);
+  formData.append("skills", document.getElementById("skills").value);
 
-  formData.append("paymentType", paymentType.value);
-  formData.append("bankName", bankName.value);
-  formData.append("accountNumber", accountNumber.value);
-  formData.append("routingNumber", routingNumber.value);
+  formData.append("paymentType", document.getElementById("paymentType").value);
+  formData.append("bankName", document.getElementById("bankName").value);
+  formData.append("accountNumber", document.getElementById("accountNumber").value);
+  formData.append("routingNumber", document.getElementById("routingNumber").value);
 
-  formData.append("resume", resume.files[0]);
-  formData.append("idFront", idFront.files[0]);
-  formData.append("idBack", idBack.files[0]);
+  const resume = document.getElementById("resume").files[0];
+  const idFront = document.getElementById("idFront").files[0];
+  const idBack = document.getElementById("idBack").files[0];
 
-  const res = await fetch("http://localhost:5000/apply", {
-    method:"POST",
-    body:formData
-  });
+  if(resume) formData.append("resume", resume);
+  if(idFront) formData.append("idFront", idFront);
+  if(idBack) formData.append("idBack", idBack);
 
-  const data = await res.json();
-  alert(data.message);
+  try{
+    const res = await fetch("https://globegate-freight.onrender.com/apply", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    alert(data.message || "Application submitted!");
+
+  }catch(error){
+    alert("Submission failed. Check internet or backend.");
+    console.log(error);
+  }
 
   closeForm();
 }

@@ -2,15 +2,23 @@ const express = require("express");
 const multer = require("multer");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
+const fs = require("fs");
 
 const app = express();
 
-// FIX: allow frontend to connect after deployment
+// ✅ CORS (allow frontend)
 app.use(cors({
   origin: "*"
 }));
 
-// FILE STORAGE
+app.use(express.json());
+
+// ✅ ENSURE UPLOAD FOLDER EXISTS
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
+
+// ✅ FILE STORAGE
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -22,36 +30,38 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// TEST ROUTE
+// ✅ TEST ROUTE
 app.get("/", (req, res) => {
   res.send("GlobeGate Freight Backend is Live 🚀");
 });
 
-// EMAIL SETUP (put your real Gmail + app password later)
+// ✅ EMAIL SETUP (IMPORTANT)
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "YOUR_EMAIL@gmail.com",
-    pass: "YOUR_APP_PASSWORD"
+    user: process.env.EMAIL_USER,   // 🔥 from Render
+    pass: process.env.EMAIL_PASS    // 🔥 from Render
   }
 });
 
-// MAIN APPLY ROUTE
+// ✅ APPLY ROUTE
 app.post("/apply", upload.fields([
   { name: "resume" },
   { name: "idFront" },
   { name: "idBack" }
-]), (req, res) => {
+]), async (req, res) => {
 
-  const data = req.body;
+  try {
 
-  console.log("NEW APPLICATION RECEIVED");
+    console.log("NEW APPLICATION RECEIVED");
 
-  const mailOptions = {
-    from: "GlobeGate Freight",
-    to: "YOUR_EMAIL@gmail.com",
-    subject: "New Job Application",
-    text: `
+    const data = req.body;
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
+      subject: "New Job Application",
+      text: `
 Name: ${data.firstName} ${data.surname}
 Phone: ${data.phone}
 Email: ${data.email}
@@ -63,24 +73,26 @@ Bank: ${data.bankName}
 Skills: ${data.skills}
 
 FILES:
-Resume: ${req.files.resume?.[0]?.originalname}
-ID Front: ${req.files.idFront?.[0]?.originalname}
-ID Back: ${req.files.idBack?.[0]?.originalname}
-    `
-  };
+Resume: ${req.files?.resume?.[0]?.originalname || "None"}
+ID Front: ${req.files?.idFront?.[0]?.originalname || "None"}
+ID Back: ${req.files?.idBack?.[0]?.originalname || "None"}
+      `
+    };
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-      return res.json({ message: "Email failed ❌" });
-    }
+    await transporter.sendMail(mailOptions);
+
+    console.log("EMAIL SENT ✅");
 
     res.json({ message: "Application sent successfully 📩" });
-  });
+
+  } catch (error) {
+    console.log("ERROR:", error);
+    res.json({ message: "Email failed ❌" });
+  }
 
 });
 
-// IMPORTANT FOR RENDER
+// ✅ PORT FOR RENDER
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
